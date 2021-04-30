@@ -33,6 +33,8 @@ class App2 extends React.Component {
         let resJson = await res.json();
         if(resJson.token){
             alert("Login success");
+            localStorage.logged=true;
+            this.props.rerenderParentCallback();
         }else{
             alert(resJson.error)
         }
@@ -49,15 +51,6 @@ class App2 extends React.Component {
         //this.forceUpdate();
     }
 
-    setloggedOut = (value) => {
-        this.setState({ loggedOut: value })
-    }
-
-
-    logout = () => {
-        localStorage.clear("Token");
-        this.setloggedOut(true);
-    }
 
     render(){
         return <div>
@@ -66,8 +59,6 @@ class App2 extends React.Component {
             username:<input type="text" value={this.state.username} onChange={this.setInputValue} name="username"></input><br/>
             password:<input type="password" value={this.state.password} onChange={this.setInputValue} name="password"></input><br/>
             Email:<input type="email" value={this.state.email} onChange={(e)=>this.setState({email:e.target.value})} name="email" /><br/>
-
-
             <button onClick={this.login}>Login</button>
             
         </div>
